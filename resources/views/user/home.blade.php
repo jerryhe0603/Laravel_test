@@ -30,7 +30,9 @@
 </head>
 <body>
 <div>
-  <a href="./blog/create">新增</a>
+  {{--<a href="./user/create">新增</a> --}}
+  {{-- <a href="{{ route('create') }}">新增</a>--}}
+  <a href="{{ route('create') }}">新增</a>
   </div>
 <center>
   <h1>{{ $title }}</h1>
@@ -44,28 +46,28 @@
     @foreach ($posts as $post)
     <tr>
       <td>
-        {{ link_to('blog/'.$post->id, $post->title) }}
+        {{ link_to('user/'.$post->id, $post->name) }}
       </td>
       <td>
-        ({{ link_to('blog/'.$post->id.'/edit', '編輯') }})
-        ({{ link_to('blog/'.$post->id.'/delete', '刪除') }})
+        ({{ link_to('user/'.$post->id.'/edit', '編輯') }})
+        ({{ link_to('user/'.$post->id.'/delete', '刪除') }})
       </td>
     </tr>
       {{--
       <div>
-          {{ link_to('blog/'.$post->id, $post->title) }}
-          ({{ link_to('blog/'.$post->id.'/edit', '編輯') }})
-          ({{ link_to('blog/'.$post->id.'/delete', '刪除') }})
+          {{ link_to('user/'.$post->id, $post->name) }}
+          ({{ link_to('user/'.$post->id.'/edit', '編輯') }})
+          ({{ link_to('user/'.$post->id.'/delete', '刪除') }})
       </div>
       --}}
     {{--<li>
-    <a href="./blog/{{ $post->id }}">{{$post->title}}</a>
-    (<a href="./blog/{{ $post->id }}/edit">編輯</a>)
-    (<a href="./blog/{{ $post->id }}/delete">刪除</a>)
+    <a href="./user/{{ $post->id }}">{{$post->name}}</a>
+    (<a href="./user/{{ $post->id }}/edit">編輯</a>)
+    (<a href="./user/{{ $post->id }}/delete">刪除</a>)
     </li> --}}
 
     <br>
-    {{-- Form::open(['url'=>'blog/'.$post->id, 'method'=>'delete']) }}
+    {{-- Form::open(['url'=>'user/'.$post->id, 'method'=>'delete']) }}
     <button type="submit">刪除</button>
     {{ Form::close() --}}
 

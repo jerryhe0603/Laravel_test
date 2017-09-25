@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use View;
-
-use App\Blog;
-use Redirect;
-use Validator;
-use App\Http\Controllers\Controller;
+// use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Redirect;
 
-class BlogController extends Controller
-{
+class UserController extends Controller
+{   
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/user';
+
     /**
      * Display a listing of the resource.
      *
@@ -21,10 +28,10 @@ class BlogController extends Controller
     public function index()
     {
         // $posts = Blog::all();
-        $posts = Blog::paginate(3);
+        $posts = User::paginate(3);
         
-        return View::make('blog/home')
-            ->with('title', 'My Blog')
+        return View::make('user/home')
+            ->with('title', '使用者管理')
             ->with('posts', $posts);
     }
 
@@ -35,8 +42,9 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return View::make('blog/create')
-            ->with('title', '新增文章');
+
+        return View::make('user/create')
+            ->with('title', '新增使用者');
     }
 
     /**
@@ -47,31 +55,28 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+       
         $input = Input::all();
-        // $input = $request->all();
-       $validator = Blog::checkNotNull($input);
 
-        // $rules = [  'title'  => 'required|min:5',
-        //             'content'=> 'required'
-        //          ];
-        // $messages = [
-        //             'title.required' => '標題欄位不能空白',
-        //             'content.required' => '內容不能空白',
-        //             'min'=>'不可小於5個字'
-        //             ];
-        // $validator = Validator::make($input, $rules, $messages);
-
+        $validator = Validator::make($input, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
         if ($validator->passes()){
-            $post = new Blog;
-            $post->title = $input['title'];
-            $post->content = $input['content'];
+            $post = new User;
+            $post->name = $input['name'];
+            $post->email = $input['email'];
+            $post->password = bcrypt($input['password']);
             $post->save();
-            return Redirect::to('blog');
+            return Redirect::to('user');
         }
-        return Redirect::to('blog/create')
+        return Redirect::to('user/create')
             ->withInput()
             ->withErrors($validator);    
+
+        
     }
 
     /**
@@ -82,10 +87,7 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $post = Blog::find($id);
-        return View::make('blog/show')
-                ->with('title', 'My Blog - '. $post->title)
-                ->with('post', $post);
+        //
     }
 
     /**
@@ -96,8 +98,8 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $post = Blog::find($id);
-        return View::make('blog/edit')
+        $post = User::find($id);
+        return View::make('user/edit')
                 ->with('title', '編輯文章')
                 ->with('post', $post);
     }
@@ -111,12 +113,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        $post = Blog::find($id);
-        $post->title = $input['title'];
-        $post->content = $input['content'];
-        $post->save();
-        return Redirect::to('blog');
+        //
     }
 
     /**
@@ -127,8 +124,6 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        $post = Blog::find($id);
-        $post->delete();
-        return Redirect::to('blog');
+        //
     }
 }

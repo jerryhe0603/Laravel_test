@@ -15,7 +15,7 @@
 //     return view('welcome');
 // });
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/blog', 'BlogController@index')->name('blog');
 
 
@@ -29,6 +29,16 @@ Route::group(['prefix'=>'blog','middleware' => 'auth'], function(){
 	Route::put('{id}', 'BlogController@update');
 	Route::get('{id}/delete', 'BlogController@destroy');
 });
+
+Route::group(['prefix'=>'user','middleware' => 'auth'], function(){
+	// echo "route";exit;
+	Route::get('/', 'UserController@index');
+	Route::get('create', 'UserController@create')->name('create');
+	// Route::post('register', 'Auth\RegisterController@register');
+	Route::post('/', 'UserController@store');
+	Route::get('{id}/edit', 'UserController@edit');
+});
+
 
 
 

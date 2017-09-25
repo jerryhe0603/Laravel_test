@@ -9,7 +9,7 @@ use Redirect;
 class Blog extends Model
 {
     protected $table = "blog";
-  	public $timestamps = false;
+  	// public $timestamps = false;
 
   	//欄位判斷 開頭要加上 use Validator;
   	static function checkNotNull($input){
