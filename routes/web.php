@@ -18,7 +18,6 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/blog', 'BlogController@index')->name('blog');
 
-
 Route::group(['prefix'=>'blog','middleware' => 'auth'], function(){
 	
 	Route::get('/', 'BlogController@index');
