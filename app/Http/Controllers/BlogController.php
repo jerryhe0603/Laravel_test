@@ -21,7 +21,7 @@ class BlogController extends Controller
     public function index()
     {
         // $posts = Blog::all();
-        $posts = Blog::paginate(3);
+        $posts = Blog::paginate(3);//顯示筆數
         
         return View::make('blog/home')
             ->with('title', 'My Blog')

@@ -37,8 +37,8 @@
   
   @if (isset($posts))
   <ol>
- <table border="1">
-    <th>標題</th>
+ <table border="1" width="80%">
+    <th width="30%">標題</th>
     <th>狀態</th>
  
     @foreach ($posts as $post)
